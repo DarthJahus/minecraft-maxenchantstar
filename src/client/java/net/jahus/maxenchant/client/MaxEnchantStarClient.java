@@ -25,7 +25,6 @@ public class MaxEnchantStarClient implements ClientModInitializer {
         PayloadTypeRegistry.playS2C().register(EffectiveMaxLevelsPayload.ID, EffectiveMaxLevelsPayload.CODEC);
 
         ClientNetworking.init();
-        TooltipHandler.init();
 
         // Clear cached server data on disconnect so a later server (with
         // different or no datapack caps) isn't judged against stale values.

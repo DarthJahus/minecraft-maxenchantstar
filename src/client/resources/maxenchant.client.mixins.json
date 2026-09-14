@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.jahus.maxenchant.client.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "EnchantmentMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
