@@ -1,39 +1,27 @@
 package net.jahus.maxenchant.network;
 
-import net.minecraft.network.RegistryByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.packet.CustomPayload;
-import net.minecraft.util.Identifier;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.Identifier;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Client-side mirror of nomaxenchant's EffectiveMaxLevelsPayload
- * (net.jahus.nomaxenchant.network.EffectiveMaxLevelsPayload).
- *
- * This is intentionally a DUPLICATE, not a shared class: maxenchant has no
- * compile-time dependency on nomaxenchant, by design (maxenchant works
- * standalone with a vanilla-registry fallback if nomaxenchant is absent).
- * The Id and wire format below MUST stay byte-for-byte identical to
- * nomaxenchant's version, since the two mods only agree on the protocol,
- * not on shared code. If nomaxenchant's payload format ever changes, this
- * file needs to be updated to match - that's the tradeoff of not having a
- * compile-time dependency.
+ * Mirror of nomaxenchant's S2C payload. No compile-time dependency on
+ * nomaxenchant — the Id and wire format MUST stay identical.
  */
 public record EffectiveMaxLevelsPayload(int protocolVersion, Map<Identifier, Integer> maxLevels)
-        implements CustomPayload {
+        implements CustomPacketPayload {
 
-    /** Must match nomaxenchant.network.EffectiveMaxLevelsPayload.PROTOCOL_VERSION. */
     public static final int EXPECTED_PROTOCOL_VERSION = 1;
 
-    // Same namespaced id as nomaxenchant - this IS the contract between the
-    // two mods. Must match exactly.
-    public static final CustomPayload.Id<EffectiveMaxLevelsPayload> ID =
-            new CustomPayload.Id<>(Identifier.of("nomaxenchant", "effective_max_levels"));
+    public static final CustomPacketPayload.Type<EffectiveMaxLevelsPayload> ID =
+            new CustomPacketPayload.Type<>(Identifier.fromNamespaceAndPath("nomaxenchant", "effective_max_levels"));
 
-    public static final PacketCodec<RegistryByteBuf, EffectiveMaxLevelsPayload> CODEC = PacketCodec.of(
-            (EffectiveMaxLevelsPayload payload, RegistryByteBuf buf) -> {
+    public static final StreamCodec<RegistryFriendlyByteBuf, EffectiveMaxLevelsPayload> CODEC = StreamCodec.of(
+            (buf, payload) -> {
                 buf.writeVarInt(payload.protocolVersion());
                 buf.writeVarInt(payload.maxLevels().size());
                 for (Map.Entry<Identifier, Integer> entry : payload.maxLevels().entrySet()) {
@@ -41,7 +29,7 @@ public record EffectiveMaxLevelsPayload(int protocolVersion, Map<Identifier, Int
                     buf.writeVarInt(entry.getValue());
                 }
             },
-            (RegistryByteBuf buf) -> {
+            (buf) -> {
                 int version = buf.readVarInt();
                 int size = buf.readVarInt();
                 Map<Identifier, Integer> map = new HashMap<>(size);
@@ -53,7 +41,7 @@ public record EffectiveMaxLevelsPayload(int protocolVersion, Map<Identifier, Int
     );
 
     @Override
-    public Id<? extends CustomPayload> getId() {
+    public Type<? extends CustomPacketPayload> type() {
         return ID;
     }
 }

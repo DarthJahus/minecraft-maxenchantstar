@@ -3,10 +3,8 @@
   "id": "maxenchant",
   "version": "${version}",
   "name": "Max Enchant Star",
-  "description": "Marks enchantments at their maximum level with a star wherever their name is displayed (item tooltips, enchanting table, anvil, etc.). If nomaxenchant is installed server-side, its effective max levels (including datapack/config overrides) are used via its public network channel; otherwise falls back to reading the local vanilla registry.",
-  "authors": [
-    "jahus"
-  ],
+  "description": "Marks enchantments at their maximum level with a star wherever their name is displayed. Uses nomaxenchant's effective_max_levels channel when available; otherwise falls back to the local vanilla registry.",
+  "authors": ["jahus"],
   "license": "Apache-2.0",
   "environment": "client",
   "entrypoints": {
@@ -22,7 +20,8 @@
   ],
   "depends": {
     "fabricloader": ">=${loader_version}",
-    "minecraft": "${minecraft_version}",
+    "minecraft": "~26.3",
+    "java": ">=25",
     "fabric-api": "*"
   }
 }

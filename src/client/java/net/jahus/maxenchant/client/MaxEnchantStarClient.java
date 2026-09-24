@@ -8,12 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * maxenchant is a client-only mod: it has no common ModInitializer and no
- * server-side code. It reads nomaxenchant's public network channel
- * (nomaxenchant:effective_max_levels) if present, with a fallback to the
- * local vanilla registry's Enchantment#getMaxLevel() otherwise. This means
- * maxenchant works standalone (star reflects vanilla caps only) even
- * without nomaxenchant installed anywhere.
+ * Client-only: reads nomaxenchant:effective_max_levels if present, otherwise
+ * falls back to Enchantment#getMaxLevel() from the local registry.
  */
 public class MaxEnchantStarClient implements ClientModInitializer {
 
@@ -22,12 +18,10 @@ public class MaxEnchantStarClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        PayloadTypeRegistry.playS2C().register(EffectiveMaxLevelsPayload.ID, EffectiveMaxLevelsPayload.CODEC);
+        PayloadTypeRegistry.clientboundPlay().register(EffectiveMaxLevelsPayload.ID, EffectiveMaxLevelsPayload.CODEC);
 
         ClientNetworking.init();
 
-        // Clear cached server data on disconnect so a later server (with
-        // different or no datapack caps) isn't judged against stale values.
         ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> ClientNetworking.reset());
     }
 }
