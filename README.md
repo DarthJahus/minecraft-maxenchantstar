@@ -1,6 +1,9 @@
 # MaxEnchantStar
 Adds a ⭐ after an enchantment's name when that enchantment is at its effective maximum level.
 
+[![Modrinth](https://img.shields.io/modrinth/dt/jahus-maxenchantstar?logo=modrinth&label=Modrinth)](https://modrinth.com/mod/jahus-maxenchantstar)
+[![CurseForge](https://img.shields.io/curseforge/dt/1720150?logo=curseforge&label=CurseForge)](https://www.curseforge.com/projects/1720150)
+
 ## The problem this solves
 Vanilla tooltips show the enchantment name and level, but never whether that level is the max. On a maxed piece of gear, you still have to remember (or look up) each enchantment's cap. With mods that raise enchantment caps (e.g. NoMaxEnchant) or datapacks that add custom enchantments, the effective maximum canalso differ from what the client assumes or the client can simply be ignorant of the maximum level.
 
