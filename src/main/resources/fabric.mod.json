@@ -4,8 +4,14 @@
   "version": "${version}",
   "name": "Max Enchant Star",
   "description": "Marks enchantments at their maximum level with a star wherever their name is displayed. Uses nomaxenchant's effective_max_levels channel when available; otherwise falls back to the local vanilla registry.",
-  "authors": ["jahus"],
+  "authors": ["Jahus"],
+  "contact": {
+    "homepage": "https://mc.jahus.net/projects",
+    "sources": "https://github.com/DarthJahus/minecraft-maxenchantstar",
+    "issues": "https://github.com/DarthJahus/minecraft-maxenchantstar/issues"
+  },
   "license": "Apache-2.0",
+  "icon": "assets/maxenchant/icon.png",
   "environment": "client",
   "entrypoints": {
     "client": [
